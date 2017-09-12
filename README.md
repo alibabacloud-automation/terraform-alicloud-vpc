@@ -53,22 +53,23 @@ You can use this in your terraform template with the following steps.
 
 1. Adding a module resource to your template, e.g. main.tf
 
-       module "tf-vpc-cluster" {
-          source = "github.com/terraform-community-modules/terraform-alicloud-vpc"
 
-          alicloud_access_key = "${var.alicloud_access_key}"
-          alicloud_secret_key = "${var.alicloud_secret_key}"
+        module "tf-vpc-cluster" {
+           source = "github.com/alibaba/terraform-alicloud-vpc"
 
-          vpc_name = "my_module_vpc"
+           alicloud_access_key = "${var.alicloud_access_key}"
+           alicloud_secret_key = "${var.alicloud_secret_key}"
 
-          vswitch_name = "my_module_vswitch"
-          vswitch_cidr = [
-             "172.16.1.0/24",
-             "172.16.2.0/24"
-          ]
+           vpc_name = "my_module_vpc"
 
-          destination_cidrs = "${var.destination_cidrs}"
-          nexthop_ids = "${var.server_ids}"
+           vswitch_name = "my_module_vswitch"
+           vswitch_cidr = [
+              "172.16.1.0/24",
+              "172.16.2.0/24"
+           ]
+
+           destination_cidrs = "${var.destination_cidrs}"
+           nexthop_ids = "${var.server_ids}"
 
         }
 
