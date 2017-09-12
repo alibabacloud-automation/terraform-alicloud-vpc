@@ -55,7 +55,7 @@ You can use this in your terraform template with the following steps.
 
 
         module "tf-vpc-cluster" {
-           source = "github.com/terraform-community-modules/terraform-alicloud-vpc"
+           source = "github.com/alibaba/terraform-alicloud-vpc"
 
            alicloud_access_key = "${var.alicloud_access_key}"
            alicloud_secret_key = "${var.alicloud_secret_key}"
