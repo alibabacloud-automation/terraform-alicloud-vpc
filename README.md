@@ -20,13 +20,10 @@ You can use this in your terraform template with the following steps.
         module "tf-vpc-cluster" {
            source = "alibaba/vpc/alicloud"
 
-           alicloud_access_key = "${var.alicloud_access_key}"
-           alicloud_secret_key = "${var.alicloud_secret_key}"
-
            vpc_name = "my_module_vpc"
 
            vswitch_name = "my_module_vswitch"
-           vswitch_cidr = [
+           vswitch_cidrs = [
               "172.16.1.0/24",
               "172.16.2.0/24"
            ]
@@ -36,12 +33,18 @@ You can use this in your terraform template with the following steps.
 
         }
 
-2. Setting values for the following variables, either through terraform.tfvars or environment variables or -var arguments on the CLI
+2. Setting values for the following variables:
 
-- alicloud_access_key
-- alicloud_secret_key
-- destination_cidrs
-- server_ids
+    through environment variables
+
+    - ALICLOUD_ACCESS_KEY
+    - ALICLOUD_SECRET_KEY
+
+    and, either through terraform.tfvars or -var arguments on the CLI
+
+    - region
+    - destination_cidrs
+    - server_ids
 
 Authors
 -------
