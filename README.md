@@ -42,7 +42,6 @@ You can use this in your terraform template with the following steps.
 
     and, either through terraform.tfvars or -var arguments on the CLI
 
-    - region
     - destination_cidrs
     - server_ids
 
@@ -52,6 +51,7 @@ Created and maintained by He Guimin(@xiaozhu36 heguimin36@163.com)
 
 Reference
 ---------
-* [Terraform-Provider-Alicloud Github](https://github.com/alibaba/terraform-provider)
-* [Terraform-Provider-Alicloud Release](https://github.com/alibaba/terraform-provider/releases)
-* [Terraform-Provider-Alicloud Latest Docs](http://47.95.33.19:4567/docs/providers/alicloud/)
+* [Terraform-Provider-Alicloud Github](https://github.com/terraform-providers/terraform-provider-alicloud)
+* [Terraform-Provider-Alicloud Release](https://releases.hashicorp.com/terraform-provider-alicloud/)
+* [Terraform-Provider-Alicloud Docs](https://www.terraform.io/docs/providers/alicloud/index.html)
+
