@@ -1,6 +1,11 @@
+variable "region" {
+  description = "The region used to launch this module resources."
+  default     = ""
+}
+
 variable "availability_zones" {
   description = "List available zones to launch several VSwitches."
-  type        = "list"
+  type        = list(string)
   default     = [""]
 }
 
@@ -44,7 +49,7 @@ variable "vpc_cidr" {
 # VSwitch variables
 variable "vswitch_cidrs" {
   description = "List of cidr blocks used to launch several new vswitches."
-  type        = "list"
+  type        = list(string)
   default     = []
 }
 
@@ -66,12 +71,13 @@ variable "route_table_id" {
 
 variable "destination_cidrs" {
   description = "List of destination CIDR block of virtual router in the specified VPC."
-  type        = "list"
+  type        = list(string)
   default     = []
 }
 
 variable "nexthop_ids" {
   description = "List of next hop instance IDs of virtual router in the specified VPC."
-  type        = "list"
+  type        = list(string)
   default     = []
 }
+
