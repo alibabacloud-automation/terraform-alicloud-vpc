@@ -3,6 +3,10 @@ output "vpc_id" {
   value = var.vpc_id == "" ? alicloud_vpc.vpc.*.id[0] : var.vpc_id
 }
 
+output "cidr_block" {
+  value = alicloud_vpc.vpc.*.cidr_block[0]
+}
+
 output "vswitch_ids" {
   value = alicloud_vswitch.vswitches.*.id
 }
