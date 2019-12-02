@@ -2,48 +2,89 @@ Alicloud VPC, VSwitch and Route Entry Terraform Module
 terraform-alicloud-vpc
 =========================================
 
-A terraform module to provide an Alicloud VPC, VSwitch and configure route entry for it.
+A terraform module used to create an Alibaba Cloud VPC, several VSwitches and configure route entry.
 
 - The module contains one VPC, several VSwitches and several custom route entries.
-- If VPC is not specified, the module will launch a new one using its own parameters.
+- If VPC is not specified, the module will retrieve existing VPC or launch a new one using default parameters.
 - The number of VSwitch depends on the length of the parameter `vswitch_cidrs`.
 - The number of custom route entry depends on the length of the parameter `destination_cidrs`
-- If you have no idea availability zones, the module will provide default values according to `cpu_core_count` and `memory_size`.
+- Each VSwitch needs an availability zone. If there is no values in the parameter `availability_zones`, data source `alicloud_zones` will retrieve them automatically.
+
+The following resources are supported:
+
+* [VPC](https://www.terraform.io/docs/providers/alicloud/r/vpc.html)
+* [VSwitch](https://www.terraform.io/docs/providers/alicloud/r/vswitch.html)
+* [Route Entry](https://www.terraform.io/docs/providers/alicloud/r/route_entry.html)
 
 Usage
 -----
-You can use this in your terraform template with the following steps.
 
-1. Adding a module resource to your template, e.g. main.tf
+```hcl
+module "vpc" {
+  source = "alibaba/vpc/alicloud"
 
+  vpc_name     = "my_module_vpc"
+  vswitch_name = "my_module_vswitch"
+  vswitch_cidrs = [
+    "172.16.1.0/24",
+    "172.16.2.0/24"
+  ]
 
-        module "tf-vpc-cluster" {
-           source = "alibaba/vpc/alicloud"
+  destination_cidrs = var.destination_cidrs
+  nexthop_ids       = var.server_ids
+}
+```
+**NOTE:** This module using AccessKey and SecretKey are from `profile` and `shared_credentials_file`.
+If you have not set them yet, please install [aliyun-cli](https://github.com/aliyun/aliyun-cli#installation) and configure it.
 
-           vpc_name = "my_module_vpc"
+## Conditional Creation
 
-           vswitch_name = "my_module_vswitch"
-           vswitch_cidrs = [
-              "172.16.1.0/24",
-              "172.16.2.0/24"
-           ]
+This moudle can retrieve existing VPC to meet more scenarios.
 
-           destination_cidrs = "${var.destination_cidrs}"
-           nexthop_ids = "${var.server_ids}"
+1. Specify the VPC id:
+    ```hcl
+      vpc_id = "existing-vpc-id"
+    ```
+    
+1. Retrieve the existing VPC by name or tags:
+    ```hcl
+    vpc_name_regex = "existing-vpc-name-regex"
+    vpc_tags       = {
+      created_by = "TF"
+      usage = "ecs"
+    }
+    ```
 
-        }
+## Inputs
 
-2. Setting values for the following variables:
+| Name | Description | Type | Default | Required |
+|------|-------------|:----:|:-----:|:-----:|
+| region  | The region ID used to launch this module resources. If not set, it will be sourced from followed by ALICLOUD_REGION environment variable and profile | string  | ''  | no  |
+| profile  | The profile name as set in the shared credentials file. If not set, it will be sourced from the ALICLOUD_PROFILE environment variable. | string  | ''  | no  |
+| shared_credentials_file  | This is the path to the shared credentials file. If this is not set and a profile is specified, $HOME/.aliyun/config.json will be used. | string  | ''  | no  |
+| skip_region_validation  | Skip static validation of region ID. Used by users of alternative AlibabaCloud-like APIs or users w/ access to regions that are not public (yet). | bool  | false | no  |
+| vpc_id  | Specifying existing VPC ID. If not set, the existing VPC will be retrieved by `vpc_name_regex` and `vpc_tags` or a new one will be created named with `vpc_name`.  | string  | ''  | no  |
+| vpc_name  | The name for a new VPC | string  | 'TF-VPC'  | no  |
+| vpc_description  | The vpc description used to launch a new vpc when 'vpc_id' is not specified | string  | See variables.tf  | no  |
+| vpc_name_regex  | A default filter applied to retrieve existing VPC by name regex | string  | ""  | no  |
+| vpc_tags  | A default filter applied to retrieve existing VPC by tags | map(string)  | {}  | no  |
+| availability_zones | List available zones to launch several VSwitches. If not set, data source `alicloud_zones` will retrieve them automatically  | string  | []  | no  |
+| vswitch_cidrs  | List of cidr blocks used to launch several new vswitches | list  | []  | yes  |
+| vswitch_name  | The vswitch name prefix used to launch several new vswitch  | string  | "TF-VSwitch"  | no  |
+| vswitch_description  | The vswitch description used to launch several new vswitch | string  | See variables.tf | no  |
+| destination_cidrs  | List of destination CIDR block of virtual router in the specified VPC  | list  | []  | no  |
+| nexthop_ids  | List of next hop instance IDs of virtual router in the specified VPC | list  |[]| no |
 
-    through environment variables
+## Outputs
 
-    - ALICLOUD_ACCESS_KEY
-    - ALICLOUD_SECRET_KEY
-
-    and, either through terraform.tfvars or -var arguments on the CLI
-
-    - destination_cidrs
-    - server_ids
+| Name | Description |
+|------|-------------|
+| this_vpc_id  | The ID of VPC  |
+| this_vpc_cidr_block  | The Cidr block of VPC  |
+| this_vswitch_ids  | The IDs of VSwitches  |
+| this_availability_zones  | The availability zones of VSwitches  |
+| this_route_table_id  | The route table ID of the VPC  |
+| this_router_id  | The Router ID of the VPC  |
 
 Authors
 -------
