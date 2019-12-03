@@ -23,7 +23,7 @@ resource "alicloud_vpc" "vpc" {
 // According to the vswitch cidr blocks to launch several vswitches
 resource "alicloud_vswitch" "vswitches" {
   count             = length(var.vswitch_cidrs)
-  vpc_id            = var.vpc_id != "" ? var.vpc_id : alicloud_vpc.vpc[0].id
+  vpc_id            = var.vpc_id != "" ? var.vpc_id : concat(alicloud_vpc.vpc.*.id, [""])[0]
   cidr_block        = var.vswitch_cidrs[count.index]
   availability_zone = length(var.availability_zones) > 0 ? var.availability_zones[count.index] : element(data.alicloud_zones.default.ids.*, count.index)
   name              = length(var.vswitch_cidrs) < 2 ? var.vswitch_name : format("%s_%s", var.vswitch_name, format(var.number_format, count.index + 1))
