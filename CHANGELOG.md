@@ -1,4 +1,9 @@
 ## 1.5.0 (Unreleased)
+
+IMPROVEMENTS:
+
+- update readme [GH-17](https://github.com/terraform-alicloud-modules/terraform-alicloud-managed-kubernetes/pull/17)
+
 ## 1.4.1 (December 2, 2019)
 
 BUG FIXES:

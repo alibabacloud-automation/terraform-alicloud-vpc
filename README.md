@@ -42,11 +42,13 @@ If you have not set them yet, please install [aliyun-cli](https://github.com/ali
 This moudle can retrieve existing VPC to meet more scenarios.
 
 1. Specify the VPC id:  
+
     ```hcl
     vpc_id = "existing-vpc-id"
     ```
     
-2. Retrieve the existing VPC by name or tags:  
+2. Retrieve the existing VPC by name or tags: 
+ 
     ```hcl
     vpc_name_regex = "existing-vpc-name-regex"
     vpc_tags       = {
