@@ -1,4 +1,10 @@
 ## 1.5.0 (Unreleased)
+## 1.4.1 (December 2, 2019)
+
+BUG FIXES:
+
+- fix output and input parameter grammar error [GH-16](https://github.com/terraform-alicloud-modules/terraform-alicloud-managed-kubernetes/pull/16)
+
 ## 1.4.0 (December 2, 2019)
 
 IMPROVEMENTS:
