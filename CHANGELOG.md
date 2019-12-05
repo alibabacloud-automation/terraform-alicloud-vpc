@@ -1,4 +1,5 @@
 ## 1.5.0 (Unreleased)
+## 1.4.1 (December 5, 2019)
 
 IMPROVEMENTS:
 
