@@ -1,6 +1,6 @@
 locals {
   vpc_id         = var.vpc_id != "" ? var.vpc_id : var.vpc_name_regex != "" || length(var.vpc_tags) > 0 ? data.alicloud_vpcs.this.ids.0 : ""
-  route_table_id = local.vpc_id == "" ? alicloud_vpc.vpc[0].route_table_id : data.alicloud_route_tables.this.ids.0
+  route_table_id = local.vpc_id == "" ? concat(alicloud_vpc.vpc.*.route_table_id, [""])[0] : data.alicloud_route_tables.this.ids.0
 }
 
 data "alicloud_vpcs" "this" {

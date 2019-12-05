@@ -2,13 +2,17 @@
 
 IMPROVEMENTS:
 
-- update readme [GH-17](https://github.com/terraform-alicloud-modules/terraform-alicloud-managed-kubernetes/pull/17)
+- update readme [GH-17](https://github.com/terraform-alicloud-modules/terraform-alicloud-vpc/pull/17)
+
+BUG FIXES:
+
+- fix output parameter this_route_table_id grammar error [GH-18](https://github.com/terraform-alicloud-modules/terraform-alicloud-vpc/pull/18)
 
 ## 1.4.1 (December 2, 2019)
 
 BUG FIXES:
 
-- fix output and input parameter grammar error [GH-16](https://github.com/terraform-alicloud-modules/terraform-alicloud-managed-kubernetes/pull/16)
+- fix output and input parameter grammar error [GH-16](https://github.com/terraform-alicloud-modules/terraform-alicloud-vpc/pull/16)
 
 ## 1.4.0 (December 2, 2019)
 
