@@ -7,32 +7,43 @@ provider "alicloud" {
   configuration_source    = "terraform-alicloud-modules/vpc"
 }
 
-// Zones data source for availability_zone
-data "alicloud_zones" "default" {
-  available_resource_creation = "VSwitch"
-}
-
 // If there is not specifying vpc_id, the module will launch a new vpc
 resource "alicloud_vpc" "vpc" {
-  count       = local.vpc_id == "" ? 1 : 0
+  count       = var.vpc_id != "" ? 0 : var.create ? 1 : 0
   name        = var.vpc_name
   cidr_block  = var.vpc_cidr
   description = var.vpc_description
+  tags = merge(
+    {
+      "Name" = format("%s", var.vpc_name)
+    },
+    var.vpc_tags,
+  )
 }
 
 // According to the vswitch cidr blocks to launch several vswitches
 resource "alicloud_vswitch" "vswitches" {
-  count             = length(var.vswitch_cidrs)
+  count             = local.create_sub_resources ? length(var.vswitch_cidrs) : 0
   vpc_id            = var.vpc_id != "" ? var.vpc_id : concat(alicloud_vpc.vpc.*.id, [""])[0]
   cidr_block        = var.vswitch_cidrs[count.index]
-  availability_zone = length(var.availability_zones) > 0 ? var.availability_zones[count.index] : element(data.alicloud_zones.default.ids.*, count.index)
-  name              = length(var.vswitch_cidrs) < 2 ? var.vswitch_name : format("%s_%s", var.vswitch_name, format(var.number_format, count.index + 1))
-  description       = length(var.vswitch_cidrs) < 2 ? var.vswitch_description : format("%s This is NO.%s", var.vswitch_description, format(var.number_format, count.index + 1))
+  availability_zone = element(var.availability_zones, count.index)
+  name              = length(var.vswitch_cidrs) > 1 || var.use_num_suffix ? format("%s%03d", var.vswitch_name, count.index + 1) : var.vswitch_name
+  description       = var.vswitch_description
+  tags = merge(
+    {
+      Name = format(
+        "%s%03d",
+        var.vswitch_name,
+        count.index + 1
+      )
+    },
+    var.vswitch_tags,
+  )
 }
 
 // According to the destination cidr block to launch a new route entry
 resource "alicloud_route_entry" "route_entry" {
-  count                 = length(var.destination_cidrs)
+  count                 = local.create_sub_resources ? length(var.destination_cidrs) : 0
   route_table_id        = local.route_table_id
   destination_cidrblock = var.destination_cidrs[count.index]
   nexthop_type          = "Instance"

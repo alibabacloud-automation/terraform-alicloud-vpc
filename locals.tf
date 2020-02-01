@@ -1,12 +1,12 @@
 locals {
-  vpc_id         = var.vpc_id != "" ? var.vpc_id : var.vpc_name_regex != "" || length(var.vpc_tags) > 0 ? data.alicloud_vpcs.this.ids.0 : ""
-  route_table_id = local.vpc_id == "" ? concat(alicloud_vpc.vpc.*.route_table_id, [""])[0] : data.alicloud_route_tables.this.ids.0
+  route_table_id = var.vpc_id == "" ? concat(alicloud_vpc.vpc.*.route_table_id, [""])[0] : data.alicloud_route_tables.this.ids.0
+
+  # Get ID of created Security Group
+  this_vpc_id = var.vpc_id != "" ? var.vpc_id : concat(alicloud_vpc.vpc.*.id, [""])[0]
+  # Whether to create other resources in which the vpc
+  create_sub_resources = var.vpc_id != "" || var.create ? true : false
 }
 
-data "alicloud_vpcs" "this" {
-  name_regex = var.vpc_name_regex
-  tags       = var.vpc_tags
-}
 data "alicloud_route_tables" "this" {
-  vpc_id = local.vpc_id
+  vpc_id = var.vpc_id
 }
