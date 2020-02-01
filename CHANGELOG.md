@@ -1,4 +1,12 @@
-## 1.5.0 (Unreleased)
+## 1.6.0 (Unreleased)
+## 1.5.0 (February 1, 2020)
+
+IMPROVEMENTS:
+
+- add create parameter [GH-19](https://github.com/terraform-alicloud-modules/terraform-alicloud-vpc/pull/19)
+- add tags for the resources [GH-19](https://github.com/terraform-alicloud-modules/terraform-alicloud-vpc/pull/19)
+- add examples for it [GH-19](https://github.com/terraform-alicloud-modules/terraform-alicloud-vpc/pull/19)
+
 ## 1.4.2 (December 5, 2019)
 
 IMPROVEMENTS:
