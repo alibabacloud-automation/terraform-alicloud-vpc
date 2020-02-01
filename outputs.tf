@@ -1,7 +1,7 @@
 // Output the IDs of the ECS instances created
 output "vpc_id" {
   description = "Deprecated and use this_vpc_id instead"
-  value       = local.vpc_id == "" ? concat(alicloud_vpc.vpc.*.id, [""])[0] : local.vpc_id
+  value       = local.this_vpc_id
 }
 
 output "cidr_block" {
@@ -30,24 +30,40 @@ output "route_table_id" {
 }
 
 output "this_vpc_id" {
-  value = local.vpc_id == "" ? concat(alicloud_vpc.vpc.*.id, [""])[0] : local.vpc_id
+  description = "The VPC id"
+  value       = local.this_vpc_id
 }
 
 output "this_vpc_cidr_block" {
-  value = concat(alicloud_vpc.vpc.*.cidr_block, [""])[0]
+  description = "The VPC cidr block"
+  value       = concat(alicloud_vpc.vpc.*.cidr_block, [""])[0]
+}
+
+output "this_vpc_tags" {
+  description = "The VPC tags"
+  value       = concat(alicloud_vpc.vpc.*.tags, [{}])[0]
 }
 
 output "this_vswitch_ids" {
-  value = alicloud_vswitch.vswitches.*.id
+  description = "List of vswitch ids."
+  value       = alicloud_vswitch.vswitches.*.id
+}
+
+output "this_vswitch_tags" {
+  description = "List of vswitch tags."
+  value       = alicloud_vswitch.vswitches.*.tags
 }
 
 output "this_availability_zones" {
-  value = alicloud_vswitch.vswitches.*.availability_zone
+  description = "List of availability zones in which vswitches launched."
+  value       = alicloud_vswitch.vswitches.*.availability_zone
 }
 
 output "this_route_table_id" {
-  value = local.route_table_id
+  description = "The vpc route table id."
+  value       = local.route_table_id
 }
 output "this_router_id" {
-  value = concat(alicloud_route_entry.route_entry.*.router_id, [""])[0]
+  description = "The vpc router id."
+  value       = concat(alicloud_route_entry.route_entry.*.router_id, [""])[0]
 }
