@@ -18,7 +18,7 @@ The following resources are supported:
 
 ## Terraform versions
 
-For Terraform 0.12 use this module.
+For Terraform 0.12 use this module and Terraform Provider AliCloud 1.56.0+.
 
 Usage
 -----
@@ -55,8 +55,15 @@ If you have not set them yet, please install [aliyun-cli](https://github.com/ali
 
 ## Examples
 
-* [Complete VPC examplee](https://github.com/terraform-alicloud-modules/terraform-alicloud-vpc/tree/master/examples/complete)
+* [Complete VPC example](https://github.com/terraform-alicloud-modules/terraform-alicloud-vpc/tree/master/examples/complete)
 * [Use Default VPC example](https://github.com/terraform-alicloud-modules/terraform-alicloud-vpc/tree/master/examples/use-default-vpc)
+
+Submit Issues
+-------------
+
+If you have any problems when using this module, please opening a [provider issue](https://github.com/terraform-providers/terraform-provider-alicloud/issues/new) and let us know.
+
+**Note:** There does not recommend to open an issue on this repo.
 
 Authors
 -------
