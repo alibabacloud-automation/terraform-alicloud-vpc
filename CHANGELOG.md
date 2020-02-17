@@ -1,4 +1,9 @@
-## 1.6.0 (Unreleased)
+## 1.5.1 (Unreleased)
+
+IMPROVEMENTS:
+
+- improve(vpc): modify provider version issues [GH-21](https://github.com/terraform-alicloud-modules/terraform-alicloud-vpc/pull/21)
+
 ## 1.5.0 (February 1, 2020)
 
 IMPROVEMENTS:
