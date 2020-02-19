@@ -34,9 +34,14 @@ output "this_vpc_id" {
   value       = local.this_vpc_id
 }
 
+output "this_vpc_name" {
+  description = "The VPC name"
+  value       = local.this_vpc_name
+}
+
 output "this_vpc_cidr_block" {
   description = "The VPC cidr block"
-  value       = concat(alicloud_vpc.vpc.*.cidr_block, [""])[0]
+  value       = local.this_vpc_cidr_block
 }
 
 output "this_vpc_tags" {
@@ -45,8 +50,18 @@ output "this_vpc_tags" {
 }
 
 output "this_vswitch_ids" {
-  description = "List of vswitch ids."
+  description = "List of vswitch ids"
   value       = alicloud_vswitch.vswitches.*.id
+}
+
+output "this_vswitch_name" {
+  description = "The name of vswitch"
+  value       = alicloud_vswitch.vswitches.*.name
+}
+
+output "this_vswitch_cidr_block" {
+  description = "The vswitch cidr block"
+  value       = alicloud_vswitch.vswitches.*.cidr_block
 }
 
 output "this_vswitch_tags" {

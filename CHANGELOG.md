@@ -1,4 +1,10 @@
 ## 1.7.0 (Unreleased)
+
+IMPROVEMENTS:
+
+- improve(vpc): Increased output parameters [GH-23](https://github.com/terraform-alicloud-modules/terraform-alicloud-vpc/pull/23)
+
+
 ## 1.6.0 (Feburary 17, 2020)
 
 IMPROVEMENTS:
