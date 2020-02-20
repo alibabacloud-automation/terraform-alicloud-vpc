@@ -1,10 +1,10 @@
-## 1.7.0 (Unreleased)
+## 1.8.0 (Unreleased)
+## 1.7.0 (Feburary 20, 2020)
 
 IMPROVEMENTS:
 
 - improve outputs name [GH-24](https://github.com/terraform-alicloud-modules/terraform-alicloud-vpc/pull/24)
 - improve(vpc): Increased output parameters [GH-23](https://github.com/terraform-alicloud-modules/terraform-alicloud-vpc/pull/23)
-
 
 ## 1.6.0 (Feburary 17, 2020)
 
