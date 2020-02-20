@@ -31,10 +31,10 @@ output "vswitch_tags" {
 
 output "vswitch_cidr_block" {
   description = "The vswitch cidr block"
-  value       = module.vpc.this_vswitch_cidr_block
+  value       = module.vpc.this_vswitch_cidr_blocks
 }
 
 output "vswitch_name" {
   description = "The name of vswitch"
-  value       = module.vpc.this_vswitch_name
+  value       = module.vpc.this_vswitch_names
 }

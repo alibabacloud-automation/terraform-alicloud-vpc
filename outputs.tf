@@ -54,12 +54,12 @@ output "this_vswitch_ids" {
   value       = alicloud_vswitch.vswitches.*.id
 }
 
-output "this_vswitch_name" {
-  description = "The name of vswitch"
+output "this_vswitch_names" {
+  description = "List of vswitch names"
   value       = alicloud_vswitch.vswitches.*.name
 }
 
-output "this_vswitch_cidr_block" {
+output "this_vswitch_cidr_blocks" {
   description = "The vswitch cidr block"
   value       = alicloud_vswitch.vswitches.*.cidr_block
 }

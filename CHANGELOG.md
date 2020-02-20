@@ -2,6 +2,7 @@
 
 IMPROVEMENTS:
 
+- improve outputs name [GH-24](https://github.com/terraform-alicloud-modules/terraform-alicloud-vpc/pull/24)
 - improve(vpc): Increased output parameters [GH-23](https://github.com/terraform-alicloud-modules/terraform-alicloud-vpc/pull/23)
 
 
