@@ -1,14 +1,19 @@
+variable "profile" {
+  default = "default"
+}
 variable "region" {
   default = "cn-hangzhou"
 }
 provider "alicloud" {
-  region = var.region
+  region  = var.region
+  profile = var.profile
 }
 
 
 module "vpc" {
-  source = "../../"
-  region = var.region
+  source  = "../../"
+  region  = var.region
+  profile = var.profile
 
   vpc_name = "complete-example"
 
@@ -31,8 +36,9 @@ module "vpc" {
 
 # This vpc and other resources won't be created
 module "vpc_zero" {
-  source = "../.."
-  region = var.region
+  source  = "../../"
+  region  = var.region
+  profile = var.profile
 
   create   = false
   vpc_name = "complete-example"

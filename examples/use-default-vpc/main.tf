@@ -1,8 +1,12 @@
+variable "profile" {
+  default = "default"
+}
 variable "region" {
   default = "cn-hangzhou"
 }
 provider "alicloud" {
-  region = var.region
+  region  = var.region
+  profile = var.profile
 }
 
 ###################################
@@ -16,8 +20,9 @@ locals {
   default_vpc_cidr_block = data.alicloud_vpcs.default.vpcs.0.cidr_block
 }
 module "vpc" {
-  source = "../../"
-  region = var.region
+  source  = "../../"
+  region  = var.region
+  profile = var.profile
 
   vpc_id = data.alicloud_vpcs.default.ids.0
 
