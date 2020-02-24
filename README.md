@@ -25,8 +25,9 @@ Usage
 
 ```hcl
 module "vpc" {
-  source = "alibaba/vpc/alicloud"
-  region = "cn-hangzhou"
+  source  = "alibaba/vpc/alicloud"
+  region  = "cn-hangzhou"
+  profile = "Your-Profile-Name"
   
   create   = true
   vpc_name = "my-env-vpc"
