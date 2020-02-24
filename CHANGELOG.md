@@ -1,4 +1,10 @@
 ## 1.8.0 (Unreleased)
+## 1.7.1 (Feburary 24, 2020)
+
+IMPROVEMENTS:
+
+- add profile for readme and examples [GH-25](https://github.com/terraform-alicloud-modules/terraform-alicloud-vpc/pull/25)
+
 ## 1.7.0 (Feburary 20, 2020)
 
 IMPROVEMENTS:
