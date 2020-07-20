@@ -52,8 +52,15 @@ variable "vpc_cidr" {
   default     = "172.16.0.0/12"
 }
 
+variable "resource_group_id" {
+  description = "The Id of resource group which the instance belongs."
+  type        = string
+  default     = ""
+}
+
 variable "vpc_name_regex" {
   description = "(Deprecated) It has been deprecated from 1.5.0."
+  type        = string
   default     = ""
 }
 

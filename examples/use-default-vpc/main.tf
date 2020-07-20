@@ -24,7 +24,8 @@ module "vpc" {
   region  = var.region
   profile = var.profile
 
-  vpc_id = data.alicloud_vpcs.default.ids.0
+  vpc_id            = data.alicloud_vpcs.default.ids.0
+  resource_group_id = "rg-acfmwvvtg5o****"
 
   availability_zones = ["cn-hangzhou-e", "cn-hangzhou-f"]
   vswitch_cidrs      = [cidrsubnet(local.default_vpc_cidr_block, 8, 10), cidrsubnet(local.default_vpc_cidr_block, 8, 11), cidrsubnet(local.default_vpc_cidr_block, 8, 12)]
