@@ -19,6 +19,11 @@ output "vpc_name" {
   value       = module.vpc.this_vpc_name
 }
 
+output "this_resource_group_id" {
+  description = "The Id of resource group which the instance belongs."
+  value       = module.vpc.this_resource_group_id
+}
+
 # Subnets
 output "vswitch_ids" {
   description = "List of IDs of vswitch"

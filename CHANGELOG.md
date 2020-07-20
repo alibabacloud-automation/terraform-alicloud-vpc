@@ -1,4 +1,10 @@
-## 1.8.0 (Unreleased)
+## 1.9.0 (Unreleased)
+## 1.8.0 (July 20, 2020)
+
+IMPROVEMENTS:
+
+- Support `resource_group_id` parameter and add README-CN docs [GH-26](https://github.com/terraform-alicloud-modules/terraform-alicloud-vpc/pull/26)
+
 ## 1.7.1 (Feburary 24, 2020)
 
 IMPROVEMENTS:
