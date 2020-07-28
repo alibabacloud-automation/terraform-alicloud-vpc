@@ -1,4 +1,10 @@
 ## 1.9.0 (Unreleased)
+## 1.8.1 (July 28, 2020)
+
+BUG FIXES:
+
+- Fix the output of `resource_group_id` [GH-27](https://github.com/terraform-alicloud-modules/terraform-alicloud-vpc/pull/27)
+
 ## 1.8.0 (July 20, 2020)
 
 IMPROVEMENTS:

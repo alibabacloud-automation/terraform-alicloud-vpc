@@ -51,7 +51,7 @@ output "this_vpc_tags" {
 
 output "this_resource_group_id" {
   description = "The Id of resource group which the instance belongs."
-  value       = alicloud_vpc.vpc.resource_group_id
+  value       = concat(alicloud_vpc.vpc.*.resource_group_id, [])[0]
 }
 
 output "this_vswitch_ids" {
