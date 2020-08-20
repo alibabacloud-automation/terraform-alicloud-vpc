@@ -29,6 +29,11 @@ output "nat_gateway_id" {
   value       = concat(alicloud_nat_gateway.default.*.id, [""])[0]
 }
 
+output "nat_gateway_eips_ids" {
+  description = "The NAT Gateway EIPs"
+  value       = concat(alicloud_eip.nat_default.*.id, [""])[0]
+}
+
 output "nat_gateway_snat_table_ids" {
   description = "The SNAT table of the NAT Gateway"
   value       = concat(alicloud_nat_gateway.default.*.snat_table_ids, [""])[0]
