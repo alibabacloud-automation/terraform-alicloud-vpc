@@ -1,7 +1,4 @@
 
-
-
-
 output "vpc_id" {
   description = "The VPC ID"
   value       = local.vpc_id
@@ -49,5 +46,5 @@ output "vswitches_ids" {
 
 output "vswitches" {
   description = "List of vswitches created"
-  value       = [for value in alicloud_vswitch.vswitch: value]
+  value       = [for value in alicloud_vswitch.vswitch : value]
 }
