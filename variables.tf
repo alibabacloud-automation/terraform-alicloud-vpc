@@ -80,7 +80,6 @@ variable "vpc_tags" {
 }
 
 # VSwitch variables
-# TODO
 variable "vswitches" {
   description = "A list of the specific CIDR blocks desired for each public subnet. The key must be in the form AZ-0, AZ-1, ... AZ-n where n is the number of Availability Zones."
   type        = map(object({ name = string, cidr_block = string, availability_zone = string, description = string }))

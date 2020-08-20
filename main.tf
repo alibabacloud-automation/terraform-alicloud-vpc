@@ -8,14 +8,6 @@ terraform {
 
 locals {
   vpc_id = var.create_vpc ? alicloud_vpc.vpc[0].id : var.vpc_id
-
-  nat_gateway_snats = [
-    for v in setproduct(alicloud_eip.nat_default.*.ip_address, [for value in alicloud_vswitch.vswitch : value.id]) : {
-      eip     = v[0]
-      vswitch = v[1]
-    }
-  ]
-
 }
 
 provider "alicloud" {
@@ -96,7 +88,7 @@ resource "alicloud_vswitch" "vswitch" {
 }
 
 # Create a dedicated Route Table for vswitches
-# Alibaba has no notion of Internet Gateway
+# Alibaba has no notion of Internet Gateway, it may be necessary to add custom routes for certain VSwitches
 resource "alicloud_route_table" "route_table" {
   count  = length(var.vswitches) > 0 ? 1 : 0
   vpc_id = local.vpc_id
@@ -117,17 +109,6 @@ resource "alicloud_route_entry" "route_entry" {
   destination_cidrblock = each.value.destination_cidrblock
   nexthop_type          = each.value.nexthop_type
   nexthop_id            = each.value.nexthop_id
-}
-
-# As VSwitch can be provisioned separately from the VPC. This is meant to be used in conjuction with Alicloud NAT GW.
-resource "alicloud_snat_entry" "snat-vswitch" {
-  count         = var.create_nat_gateway ? length(local.nat_gateway_snats) : 0
-  snat_table_id = alicloud_nat_gateway.default[0].snat_table_ids
-
-  source_vswitch_id = local.nat_gateway_snats[count.index].vswitch
-  snat_ip           = local.nat_gateway_snats[count.index].eip
-
-  depends_on = [alicloud_eip_association.nat_default]
 }
 
 # ---------------------------------------------------------------------------------------------------------------------
