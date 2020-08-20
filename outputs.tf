@@ -1,4 +1,6 @@
-// Output the IDs of the ECS instances created
+
+
+
 
 output "vpc_id" {
   description = "The VPC ID"
@@ -27,21 +29,21 @@ output "resource_group_id" {
 
 output "nat_gateway_id" {
   description = "The NAT Gateway Identifier if created"
-  value       = concat(alicloud_nat_gateway.default.*.id, [])[0]
+  value       = concat(alicloud_nat_gateway.default.*.id, [""])[0]
 }
 
 output "nat_gateway_snat_table_ids" {
   description = "The SNAT table of the NAT Gateway"
-  value       = concat(alicloud_nat_gateway.default.*.snat_table_ids, [])[0]
+  value       = concat(alicloud_nat_gateway.default.*.snat_table_ids, [""])[0]
 }
 
 output "nat_gateway_dnat_table_ids" {
   description = "The DNAT table of the NAT Gateway"
-  value       = concat(alicloud_nat_gateway.default.*.forward_table_ids, [])[0]
+  value       = concat(alicloud_nat_gateway.default.*.forward_table_ids, [""])[0]
 }
 
 output "vswitches_ids" {
-  description = "List of vswitch ids"
+  description = "Map of vswitch ids"
   value       = [for value in alicloud_vswitch.vswitch : value.id]
 }
 
