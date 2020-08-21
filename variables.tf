@@ -48,7 +48,7 @@ variable "vpc_cidr" {
 }
 
 variable "vpc_id" {
-  description = "The VPC ID when it is already created."
+  description = "The VPC ID when the VPC is already created."
   type        = string
   default     = ""
 }
@@ -87,26 +87,26 @@ variable "vswitches_tags" {
 # NAT Gateway variables
 variable "create_nat_gateway" {
   description = "Whether to create the NAT Gateway."
-  type    = bool
-  default = false
+  type        = bool
+  default     = false
 }
 
 variable "nat_gateway_specification" {
   description = "The NAT Gateway specification: Small, Middle or Large"
-  type = string
-  default = "Small"
+  type        = string
+  default     = "Small"
 }
 
 variable "nat_eip_bandwidth" {
   description = "The maximum bandwidth of each EIP assigned to the NAT Gateway in Mbps"
-  type = number
-  default = 5
+  type        = number
+  default     = 5
 }
 
 variable "nat_gateway_num_eips" {
   description = "The number of EIPs to assign to the NAT Gateway"
-  type = number
-  default = 1
+  type        = number
+  default     = 1
 }
 
 # Routes variables

@@ -1,9 +1,9 @@
 # ----------------------------------------------------------------------------------------------------------------------
 # REQUIRE A SPECIFIC TERRAFORM VERSION OR HIGHER
-# This module has been updated with 0.12 syntax, which means it is no longer compatible with any versions below 0.12.
+# This module has been updated with 0.12.6 syntax, which means it is no longer compatible with any versions below 0.12.6
 # ----------------------------------------------------------------------------------------------------------------------
 terraform {
-  required_version = ">= 0.12"
+  required_version = ">= 0.12.6"
 }
 
 locals {
@@ -43,7 +43,7 @@ resource "alicloud_vpc" "this" {
 
 resource "alicloud_nat_gateway" "this" {
   count         = var.create_nat_gateway ? 1 : 0
-  vpc_id        = alicloud_vpc.this[0].id
+  vpc_id        = local.vpc_id
   name          = var.vpc_name
   specification = var.nat_gateway_specification
 }
