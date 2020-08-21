@@ -1,11 +1,3 @@
-# Cloud Project variable
-
-variable "project_name" {
-  description = "The project name"
-  type        = string
-  default     = ""
-}
-
 # Terraform general variables
 variable "region" {
   description = "The region used to launch this module resources."
@@ -111,6 +103,19 @@ variable "nat_gateway_num_eips" {
 }
 
 # Routes variables
+
+variable "route_table_name" {
+  description = "The Route Table name"
+  type        = string
+  default     = null
+}
+
+variable "route_table_description" {
+  description = "The Route Table description"
+  type        = string
+  default     = null
+}
+
 variable "custom_routes" {
   description = "A list of the specific routes desired for the route table."
   type        = map(object({ destination_cidrblock = string, nexthop_type = string, nexthop_id = string }))

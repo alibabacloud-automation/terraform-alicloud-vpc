@@ -90,10 +90,11 @@ resource "alicloud_vswitch" "this" {
 # Create a dedicated Route Table for vswitches
 # Alibaba has no notion of Internet Gateway, it may be necessary to add custom routes for certain VSwitches
 resource "alicloud_route_table" "this" {
-  count  = length(var.vswitches) > 0 ? 1 : 0
-  vpc_id = local.vpc_id
-  name   = "${var.project_name}-routetable"
-  tags   = var.tags
+  count       = length(var.vswitches) > 0 ? 1 : 0
+  vpc_id      = local.vpc_id
+  name        = var.route_table_name
+  description = var.route_table_description
+  tags        = var.tags
 }
 
 # Associate each vswitch with the route table
