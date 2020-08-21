@@ -120,5 +120,5 @@ resource "alicloud_cen_instance_grant" "this" {
   count             = var.cen_enabled ? 1 : 0
   cen_id            = var.cen_id
   cen_owner_id      = var.cen_owner_id
-  child_instance_id = alicloud_vpc.this[0].id
+  child_instance_id = local.vpc_id
 }
