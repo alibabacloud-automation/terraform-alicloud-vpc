@@ -86,19 +86,26 @@ variable "vswitches_tags" {
 
 # NAT Gateway variables
 variable "create_nat_gateway" {
+  description = "Whether to create the NAT Gateway."
   type    = bool
   default = false
 }
 
 variable "nat_gateway_specification" {
+  description = "The NAT Gateway specification: Small, Middle or Large"
+  type = string
   default = "Small"
 }
 
 variable "nat_eip_bandwidth" {
-  default = 1
+  description = "The maximum bandwidth of each EIP assigned to the NAT Gateway in Mbps"
+  type = number
+  default = 5
 }
 
 variable "nat_gateway_num_eips" {
+  description = "The number of EIPs to assign to the NAT Gateway"
+  type = number
   default = 1
 }
 
