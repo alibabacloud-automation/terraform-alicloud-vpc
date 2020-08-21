@@ -7,7 +7,7 @@ terraform {
 }
 
 locals {
-  vpc_id = var.create_vpc ? alicloud_vpc.vpc[0].id : var.vpc_id
+  vpc_id = var.create_vpc ? alicloud_vpc.this[0].id : var.vpc_id
 }
 
 provider "alicloud" {
@@ -18,7 +18,7 @@ provider "alicloud" {
   configuration_source    = "terraform-alicloud-modules/vpc"
 }
 
-resource "alicloud_vpc" "vpc" {
+resource "alicloud_vpc" "this" {
   count             = var.create_vpc ? 1 : 0
   name              = var.vpc_name
   cidr_block        = var.vpc_cidr
@@ -41,15 +41,15 @@ resource "alicloud_vpc" "vpc" {
 # See https://www.alibabacloud.com/product/nat
 # ---------------------------------------------------------------------------------------------------------------------
 
-resource "alicloud_nat_gateway" "default" {
+resource "alicloud_nat_gateway" "this" {
   count         = var.create_nat_gateway ? 1 : 0
-  vpc_id        = alicloud_vpc.vpc[0].id
+  vpc_id        = alicloud_vpc.this[0].id
   name          = var.vpc_name
   specification = var.nat_gateway_specification
 }
 
 # create one or more eips for NAT GW
-resource "alicloud_eip" "nat_default" {
+resource "alicloud_eip" "nat" {
   name      = var.vpc_name
   count     = var.create_nat_gateway && var.nat_gateway_num_eips > 0 ? var.nat_gateway_num_eips : 0
   bandwidth = var.nat_eip_bandwidth
@@ -57,16 +57,16 @@ resource "alicloud_eip" "nat_default" {
 }
 
 # attach eips to nat gateway
-resource "alicloud_eip_association" "nat_default" {
+resource "alicloud_eip_association" "nat" {
   count         = var.create_nat_gateway && var.nat_gateway_num_eips > 0 ? var.nat_gateway_num_eips : 0
-  allocation_id = alicloud_eip.nat_default[count.index].id
-  instance_id   = alicloud_nat_gateway.default[0].id
+  allocation_id = alicloud_eip.nat[count.index].id
+  instance_id   = alicloud_nat_gateway.this[0].id
 }
 
 # ---------------------------------------------------------------------------------------------------------------------
 #  VSwitch
 # ---------------------------------------------------------------------------------------------------------------------
-resource "alicloud_vswitch" "vswitch" {
+resource "alicloud_vswitch" "this" {
   for_each          = var.vswitches
   vpc_id            = local.vpc_id
   name              = each.value.name
@@ -89,7 +89,7 @@ resource "alicloud_vswitch" "vswitch" {
 
 # Create a dedicated Route Table for vswitches
 # Alibaba has no notion of Internet Gateway, it may be necessary to add custom routes for certain VSwitches
-resource "alicloud_route_table" "route_table" {
+resource "alicloud_route_table" "this" {
   count  = length(var.vswitches) > 0 ? 1 : 0
   vpc_id = local.vpc_id
   name   = "${var.project_name}-routetable"
@@ -97,15 +97,15 @@ resource "alicloud_route_table" "route_table" {
 }
 
 # Associate each vswitch with the route table
-resource "alicloud_route_table_attachment" "route_table_attachment" {
-  for_each       = alicloud_vswitch.vswitch
+resource "alicloud_route_table_attachment" "this" {
+  for_each       = alicloud_vswitch.this
   vswitch_id     = each.value.id
-  route_table_id = alicloud_route_table.route_table.0.id
+  route_table_id = alicloud_route_table.this.0.id
 }
 
-resource "alicloud_route_entry" "route_entry" {
+resource "alicloud_route_entry" "this" {
   for_each              = var.custom_routes
-  route_table_id        = alicloud_route_table.route_table[0].id
+  route_table_id        = alicloud_route_table.this[0].id
   destination_cidrblock = each.value.destination_cidrblock
   nexthop_type          = each.value.nexthop_type
   nexthop_id            = each.value.nexthop_id
@@ -115,9 +115,9 @@ resource "alicloud_route_entry" "route_entry" {
 # CREATE CEN Grant
 # Grant access to CEN
 # ---------------------------------------------------------------------------------------------------------------------
-resource "alicloud_cen_instance_grant" "instance_grant" {
+resource "alicloud_cen_instance_grant" "this" {
   count             = var.cen_enabled ? 1 : 0
   cen_id            = var.cen_id
   cen_owner_id      = var.cen_owner_id
-  child_instance_id = alicloud_vpc.vpc[0].id
+  child_instance_id = alicloud_vpc.this[0].id
 }
