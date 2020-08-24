@@ -1,6 +1,63 @@
 
+output "this_vpc_id" {
+  description = "The VPC identifier"
+  value       = local.vpc_id
+}
+
+output "this_vpc_cidr_block" {
+  description = "The VPC CIDR Block"
+  value       = concat(alicloud_vpc.this.*.cidr_block, [""])[0]
+}
+
+output "this_vpc_name" {
+  description = "The VPC name assigned"
+  value       = concat(alicloud_vpc.this.*.name, [""])[0]
+}
+
+output "this_vpc_tags" {
+  description = "The VPC tags assigned"
+  value       = concat(alicloud_vpc.this.*.tags, [{}])[0]
+}
+
+output "this_resource_group_id" {
+  description = "The identifier of resource group which the VPC belongs"
+  value       = concat(alicloud_vpc.this.*.resource_group_id, [""])[0]
+}
+
+output "this_nat_gateway_id" {
+  description = "The NAT Gateway Identifier if created"
+  value       = concat(alicloud_nat_gateway.this.*.id, [""])[0]
+}
+
+output "this_nat_gateway_eips_ids" {
+  description = "The EIPs associated to the NAT Gateway"
+  value       = concat(alicloud_eip.nat.*.id, [""])[0]
+}
+
+output "this_nat_gateway_snat_table_id" {
+  description = "The SNAT table of the NAT Gateway"
+  value       = concat(alicloud_nat_gateway.this.*.snat_table_ids, [""])[0]
+}
+
+output "this_nat_gateway_dnat_table_id" {
+  description = "The DNAT table of the NAT Gateway"
+  value       = concat(alicloud_nat_gateway.this.*.forward_table_ids, [""])[0]
+}
+
+output "this_vswitches_ids" {
+  description = "List of vswitch identifiers created by the module"
+  value       = [for value in alicloud_vswitch.this : value.id]
+}
+
+output "this_vswitches" {
+  description = "List of vswitches created by the module"
+  value       = [for value in alicloud_vswitch.this : value]
+}
+
+###
+
 output "vpc_id" {
-  description = "The VPC ID"
+  description = "The VPC identifier"
   value       = local.vpc_id
 }
 
@@ -10,17 +67,17 @@ output "vpc_cidr_block" {
 }
 
 output "vpc_name" {
-  description = "The VPC name"
+  description = "The VPC name assigned"
   value       = concat(alicloud_vpc.this.*.name, [""])[0]
 }
 
 output "vpc_tags" {
-  description = "The VPC tags"
+  description = "The VPC tags assigned"
   value       = concat(alicloud_vpc.this.*.tags, [{}])[0]
 }
 
 output "resource_group_id" {
-  description = "The Id of resource group which the instance belongs"
+  description = "The identifier of resource group which the VPC belongs"
   value       = concat(alicloud_vpc.this.*.resource_group_id, [""])[0]
 }
 
@@ -45,11 +102,12 @@ output "nat_gateway_dnat_table_id" {
 }
 
 output "vswitches_ids" {
-  description = "List of vswitch ids"
+  description = "List of vswitch identifiers created by the module"
   value       = [for value in alicloud_vswitch.this : value.id]
 }
 
 output "vswitches" {
-  description = "List of vswitches created"
+  description = "List of vswitches created by the module"
   value       = [for value in alicloud_vswitch.this : value]
 }
+
