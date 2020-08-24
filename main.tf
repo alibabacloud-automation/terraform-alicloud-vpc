@@ -8,6 +8,8 @@ terraform {
 
 locals {
   vpc_id = var.create_vpc ? alicloud_vpc.this[0].id : var.vpc_id
+  nat_gateway_name = var.nat_gateway_name != "" ? var.nat_gateway_name : var.vpc_name
+  nat_gateway_eip_name = var.nat_gateway_eip_name != "" ? var.nat_gateway_eip_name : "${var.vpc_name}-natgw"
 }
 
 provider "alicloud" {
@@ -44,21 +46,21 @@ resource "alicloud_vpc" "this" {
 resource "alicloud_nat_gateway" "this" {
   count         = var.create_nat_gateway ? 1 : 0
   vpc_id        = local.vpc_id
-  name          = var.vpc_name
+  name          = local.nat_gateway_name
   specification = var.nat_gateway_specification
 }
 
 # create one or more eips for NAT GW
 resource "alicloud_eip" "nat" {
-  name      = var.vpc_name
-  count     = var.create_nat_gateway && var.nat_gateway_num_eips > 0 ? var.nat_gateway_num_eips : 0
+  name      = local.nat_gateway_eip_name
+  count     = var.create_nat_gateway && var.nat_gateway_eip_num > 0 ? var.nat_gateway_eip_num : 0
   bandwidth = var.nat_eip_bandwidth
   tags      = var.tags
 }
 
 # attach eips to nat gateway
 resource "alicloud_eip_association" "nat" {
-  count         = var.create_nat_gateway && var.nat_gateway_num_eips > 0 ? var.nat_gateway_num_eips : 0
+  count         = var.create_nat_gateway && var.nat_gateway_eip_num > 0 ? var.nat_gateway_eip_num : 0
   allocation_id = alicloud_eip.nat[count.index].id
   instance_id   = alicloud_nat_gateway.this[0].id
 }
@@ -90,7 +92,7 @@ resource "alicloud_vswitch" "this" {
 # Create a dedicated Route Table for vswitches
 # Alibaba has no notion of Internet Gateway, it may be necessary to add custom routes for certain VSwitches
 resource "alicloud_route_table" "this" {
-  count       = length(var.vswitches) > 0 ? 1 : 0
+  count       = var.route_table_id == "" && length(var.vswitches) > 0 ? 1 : 0
   vpc_id      = local.vpc_id
   name        = var.route_table_name
   description = var.route_table_description
@@ -101,12 +103,12 @@ resource "alicloud_route_table" "this" {
 resource "alicloud_route_table_attachment" "this" {
   for_each       = alicloud_vswitch.this
   vswitch_id     = each.value.id
-  route_table_id = alicloud_route_table.this.0.id
+  route_table_id = var.route_table_id != "" ? var.route_table_id : alicloud_route_table.this[0].id
 }
 
 resource "alicloud_route_entry" "this" {
   for_each              = var.custom_routes
-  route_table_id        = alicloud_route_table.this[0].id
+  route_table_id        = var.route_table_id != "" ? var.route_table_id : alicloud_route_table.this[0].id
   destination_cidrblock = each.value.destination_cidrblock
   nexthop_type          = each.value.nexthop_type
   nexthop_id            = each.value.nexthop_id

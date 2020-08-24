@@ -38,7 +38,7 @@ variable "vpc_name" {
 variable "vpc_description" {
   description = "The vpc description used to launch a new vpc."
   type        = string
-  default     = "A new VPC created by Terrafrom module terraform-alicloud-vpc"
+  default     = "A new VPC created by the Terraform module terraform-alicloud-vpc"
 }
 
 variable "vpc_cidr" {
@@ -91,10 +91,22 @@ variable "create_nat_gateway" {
   default     = false
 }
 
+variable "nat_gateway_name" {
+  description = "The name of the NAT Gateway"
+  type        = string
+  default     = ""
+}
+
 variable "nat_gateway_specification" {
   description = "The NAT Gateway specification: Small, Middle or Large"
   type        = string
   default     = "Small"
+}
+
+variable "nat_gateway_eip_name" {
+  description = "The name of the EIPs associated to the NAT Gateway"
+  type        = string
+  default     = ""
 }
 
 variable "nat_eip_bandwidth" {
@@ -103,7 +115,7 @@ variable "nat_eip_bandwidth" {
   default     = 5
 }
 
-variable "nat_gateway_num_eips" {
+variable "nat_gateway_eip_num" {
   description = "The number of EIPs to assign to the NAT Gateway"
   type        = number
   default     = 1
@@ -115,6 +127,12 @@ variable "route_table_name" {
   description = "The Route Table name"
   type        = string
   default     = null
+}
+
+variable "route_table_id" {
+  description = "The Route Table identifier to attach the VSwitches, if different from the route table created by the module"
+  type        = string
+  default     = ""
 }
 
 variable "route_table_description" {
