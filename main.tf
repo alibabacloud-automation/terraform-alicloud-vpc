@@ -7,8 +7,8 @@ terraform {
 }
 
 locals {
-  vpc_id = var.create_vpc ? alicloud_vpc.this[0].id : var.vpc_id
-  nat_gateway_name = var.nat_gateway_name != "" ? var.nat_gateway_name : var.vpc_name
+  vpc_id               = var.create_vpc ? alicloud_vpc.this[0].id : var.vpc_id
+  nat_gateway_name     = var.nat_gateway_name != "" ? var.nat_gateway_name : var.vpc_name
   nat_gateway_eip_name = var.nat_gateway_eip_name != "" ? var.nat_gateway_eip_name : "${var.vpc_name}-natgw"
 }
 

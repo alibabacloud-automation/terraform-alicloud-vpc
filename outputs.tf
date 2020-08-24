@@ -1,7 +1,7 @@
 
 output "this_vpc_id" {
   description = "The VPC identifier"
-  value       = local.vpc_id
+  value       = concat(alicloud_vpc.this.*.id, [""])[0]
 }
 
 output "this_vpc_cidr_block" {
