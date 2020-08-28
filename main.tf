@@ -6,10 +6,33 @@ terraform {
   required_version = ">= 0.12.6"
 }
 
+data "alicloud_nat_gateways" "this" {
+  count = var.create_nat_gateway || var.associate_nat_gateway ? 1 : 0
+  vpc_id     = local.vpc_id
+}
+
 locals {
   vpc_id               = var.create_vpc ? alicloud_vpc.this[0].id : var.vpc_id
   nat_gateway_name     = var.nat_gateway_name != "" ? var.nat_gateway_name : var.vpc_name
   nat_gateway_eip_name = var.nat_gateway_eip_name != "" ? var.nat_gateway_eip_name : "${var.vpc_name}-natgw"
+
+/*
+  nat_gateway_snats = [
+    for v in setproduct(alicloud_eip.nat_default.*.ip_address, [for value in alicloud_vswitch.vswitch : value.id]) : {
+      eip     = v[0]
+      vswitch = v[1]
+    }
+  ] TODO the vswitch do not work like this in the shared vpc because they are created elsewhere
+*/
+
+// Alibaba VPC supports only 1 NAT Gateway per VPC but the Terraform modules 
+  nat_gateway_snats = var.associate_nat_gateway ? [
+    for v in setproduct(data.alicloud_nat_gateways.this[0].gateways[0].ip_lists,  [for value in alicloud_vswitch.this : value.id]) : {
+      eip     = v[0]
+      vswitch = v[1]
+    }
+  ] : []
+
 }
 
 provider "alicloud" {
@@ -112,6 +135,18 @@ resource "alicloud_route_entry" "this" {
   destination_cidrblock = each.value.destination_cidrblock
   nexthop_type          = each.value.nexthop_type
   nexthop_id            = each.value.nexthop_id
+}
+
+# TODO fix for external dependencies / remove them / dynamic ?
+# As VSwitch can be provisioned separately from the VPC workspace. This is meant to be used in conjuction with Alicloud NAT GW.
+resource "alicloud_snat_entry" "snat-vswitch-natgw" {
+  count         = var.associate_nat_gateway ? length(local.nat_gateway_snats) : 0
+  snat_table_id = data.alicloud_nat_gateways.this[0].gateways[0].snat_table_id
+
+  source_vswitch_id = local.nat_gateway_snats[count.index].vswitch
+  snat_ip           = local.nat_gateway_snats[count.index].eip
+
+ # depends_on = [alicloud_eip_association.nat_default]
 }
 
 # ---------------------------------------------------------------------------------------------------------------------

@@ -91,6 +91,12 @@ variable "create_nat_gateway" {
   default     = false
 }
 
+variable "associate_nat_gateway" {
+  description = "Whether to associate the NAT Gateway to the list of VSwitches created."
+  type        = bool
+  default     = false
+}
+
 variable "nat_gateway_name" {
   description = "The name of the NAT Gateway"
   type        = string
