@@ -73,7 +73,9 @@ If you have any problems when using this module, please opening a [provider issu
 
 Authors
 -------
-Created and maintained by He Guimin(@xiaozhu36 heguimin36@163.com)
+Created and maintained by: 
+- He Guimin(@xiaozhu36 heguimin36@163.com)
+- Brian Mori (@brianmori)
 
 License
 ----

@@ -1,3 +1,4 @@
+# Terraform general variables
 variable "region" {
   description = "The region used to launch this module resources."
   type        = string
@@ -22,16 +23,10 @@ variable "skip_region_validation" {
 }
 
 # VPC variables
-variable "create" {
-  description = "Whether to create vpc. If false, you can specify an existing vpc by setting 'vpc_id'."
+variable "create_vpc" {
+  description = "Whether to create vpc. If false, you must specify an existing vpc by setting 'vpc_id'."
   type        = bool
   default     = true
-}
-
-variable "vpc_id" {
-  description = "The vpc id used to launch several vswitches. If set, the 'create' will be ignored."
-  type        = string
-  default     = ""
 }
 
 variable "vpc_name" {
@@ -43,7 +38,7 @@ variable "vpc_name" {
 variable "vpc_description" {
   description = "The vpc description used to launch a new vpc."
   type        = string
-  default     = "A new VPC created by Terrafrom module terraform-alicloud-vpc"
+  default     = "A new VPC created by the Terraform module terraform-alicloud-vpc"
 }
 
 variable "vpc_cidr" {
@@ -52,70 +47,128 @@ variable "vpc_cidr" {
   default     = "172.16.0.0/12"
 }
 
+variable "vpc_id" {
+  description = "The VPC ID when the VPC is already created."
+  type        = string
+  default     = ""
+}
+
 variable "resource_group_id" {
   description = "The Id of resource group which the instance belongs."
   type        = string
   default     = ""
 }
 
-variable "vpc_name_regex" {
-  description = "(Deprecated) It has been deprecated from 1.5.0."
-  type        = string
-  default     = ""
+variable "tags" {
+  description = "The tags assigned to the whole module."
+  type        = map(string)
+  default     = {}
 }
 
 variable "vpc_tags" {
-  description = "The tags used to launch a new vpc. Before 1.5.0, it used to retrieve existing VPC."
+  description = "The tags assigned to the vpc."
   type        = map(string)
   default     = {}
 }
 
 # VSwitch variables
-variable "vswitch_cidrs" {
-  description = "List of cidr blocks used to launch several new vswitches. If not set, there is no new vswitches will be created."
-  type        = list(string)
-  default     = []
+variable "vswitches" {
+  description = "A list of the specific CIDR blocks desired for each public subnet. The key must be in the form AZ-0, AZ-1, ... AZ-n where n is the number of Availability Zones."
+  type        = map(object({ name = string, cidr_block = string, availability_zone = string, description = string }))
+  default     = {}
 }
 
-variable "availability_zones" {
-  description = "List available zones to launch several VSwitches."
-  type        = list(string)
-  default     = []
-}
-
-variable "vswitch_name" {
-  description = "The vswitch name prefix used to launch several new vswitches."
-  default     = "TF-VSwitch"
-}
-
-variable "use_num_suffix" {
-  description = "Always append numerical suffix(like 001, 002 and so on) to vswitch name, even if the length of `vswitch_cidrs` is 1"
-  type        = bool
-  default     = false
-}
-
-variable "vswitch_description" {
-  description = "The vswitch description used to launch several new vswitch."
-  type        = string
-  default     = "New VSwitch created by Terrafrom module terraform-alicloud-vpc."
-}
-
-variable "vswitch_tags" {
-  description = "The tags used to launch serveral vswitches."
+variable "vswitches_tags" {
+  description = "The tags assigned only to vswitches"
   type        = map(string)
   default     = {}
 }
 
-// According to the vswitch cidr blocks to launch several vswitches
-variable "destination_cidrs" {
-  description = "List of destination CIDR block of virtual router in the specified VPC."
-  type        = list(string)
-  default     = []
+# NAT Gateway variables
+variable "create_nat_gateway" {
+  description = "Whether to create the NAT Gateway."
+  type        = bool
+  default     = false
 }
 
-variable "nexthop_ids" {
-  description = "List of next hop instance IDs of virtual router in the specified VPC."
-  type        = list(string)
-  default     = []
+variable "associate_nat_gateway" {
+  description = "Whether to associate the NAT Gateway to the list of VSwitches created."
+  type        = bool
+  default     = false
 }
 
+variable "nat_gateway_name" {
+  description = "The name of the NAT Gateway"
+  type        = string
+  default     = ""
+}
+
+variable "nat_gateway_specification" {
+  description = "The NAT Gateway specification: Small, Middle or Large"
+  type        = string
+  default     = "Small"
+}
+
+variable "nat_gateway_eip_name" {
+  description = "The name of the EIPs associated to the NAT Gateway"
+  type        = string
+  default     = ""
+}
+
+variable "nat_eip_bandwidth" {
+  description = "The maximum bandwidth of each EIP assigned to the NAT Gateway in Mbps"
+  type        = number
+  default     = 5
+}
+
+variable "nat_gateway_eip_num" {
+  description = "The number of EIPs to assign to the NAT Gateway"
+  type        = number
+  default     = 1
+}
+
+# Routes variables
+
+variable "route_table_name" {
+  description = "The Route Table name"
+  type        = string
+  default     = null
+}
+
+variable "route_table_id" {
+  description = "The Route Table identifier to attach the VSwitches, if different from the route table created by the module"
+  type        = string
+  default     = ""
+}
+
+variable "route_table_description" {
+  description = "The Route Table description"
+  type        = string
+  default     = null
+}
+
+variable "custom_routes" {
+  description = "A list of the specific routes desired for the route table."
+  type        = map(object({ destination_cidrblock = string, nexthop_type = string, nexthop_id = string }))
+  default     = {}
+}
+
+
+# CEN
+variable "cen_enabled" {
+  description = "The VPC must or must not access to the CEN"
+  type        = bool
+  default     = false
+}
+
+variable "cen_id" {
+  description = "The CEN identifier"
+  type        = string
+  default     = null
+}
+
+variable "cen_owner_id" {
+  description = "The CEN owner identifier"
+  type        = string
+  default     = null
+}
