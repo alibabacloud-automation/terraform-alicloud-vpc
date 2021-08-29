@@ -1,11 +1,3 @@
-provider "alicloud" {
-  profile                 = var.profile != "" ? var.profile : null
-  shared_credentials_file = var.shared_credentials_file != "" ? var.shared_credentials_file : null
-  region                  = var.region != "" ? var.region : null
-  skip_region_validation  = var.skip_region_validation
-  configuration_source    = "terraform-alicloud-modules/vpc"
-}
-
 // If there is not specifying vpc_id, the module will launch a new vpc
 resource "alicloud_vpc" "vpc" {
   count             = var.vpc_id != "" ? 0 : var.create ? 1 : 0

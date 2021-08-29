@@ -1,4 +1,9 @@
-## 1.9.0 (Unreleased)
+## 1.10.0 (Unreleased)
+## 1.9.0 (August 29, 2021)
+
+IMPROVEMENTS:
+- Removes the provider setting and improves the Readme [GH-34](https://github.com/terraform-alicloud-modules/terraform-alicloud-vpc/pull/34)
+
 ## 1.8.1 (July 28, 2020)
 
 BUG FIXES:
