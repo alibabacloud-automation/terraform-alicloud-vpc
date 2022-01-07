@@ -1,7 +1,7 @@
 // If there is not specifying vpc_id, the module will launch a new vpc
 resource "alicloud_vpc" "vpc" {
   count             = var.vpc_id != "" ? 0 : var.create ? 1 : 0
-  name              = var.vpc_name
+  vpc_name          = var.vpc_name
   cidr_block        = var.vpc_cidr
   resource_group_id = var.resource_group_id
   description       = var.vpc_description
