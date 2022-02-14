@@ -9,6 +9,7 @@ variable "profile" {
   type        = string
   default     = ""
 }
+
 variable "shared_credentials_file" {
   description = "(Deprecated from version 1.9.0) This is the path to the shared credentials file. If this is not set and a profile is specified, $HOME/.aliyun/config.json will be used."
   type        = string
@@ -19,6 +20,12 @@ variable "skip_region_validation" {
   description = "(Deprecated from version 1.9.0) Skip static validation of region ID. Used by users of alternative AlibabaCloud-like APIs or users w/ access to regions that are not public (yet)."
   type        = bool
   default     = false
+}
+
+variable "vpc_name_regex" {
+  description = "(Deprecated) It has been deprecated from 1.5.0."
+  type        = string
+  default     = ""
 }
 
 # VPC variables
@@ -37,19 +44,13 @@ variable "vpc_id" {
 variable "vpc_name" {
   description = "The vpc name used to launch a new vpc."
   type        = string
-  default     = "TF-VPC"
-}
-
-variable "vpc_description" {
-  description = "The vpc description used to launch a new vpc."
-  type        = string
-  default     = "A new VPC created by Terrafrom module terraform-alicloud-vpc"
+  default     = ""
 }
 
 variable "vpc_cidr" {
   description = "The cidr block used to launch a new vpc."
   type        = string
-  default     = "172.16.0.0/12"
+  default     = ""
 }
 
 variable "resource_group_id" {
@@ -58,8 +59,8 @@ variable "resource_group_id" {
   default     = ""
 }
 
-variable "vpc_name_regex" {
-  description = "(Deprecated) It has been deprecated from 1.5.0."
+variable "vpc_description" {
+  description = "The vpc description used to launch a new vpc."
   type        = string
   default     = ""
 }
@@ -85,7 +86,8 @@ variable "availability_zones" {
 
 variable "vswitch_name" {
   description = "The vswitch name prefix used to launch several new vswitches."
-  default     = "TF-VSwitch"
+  type        = string
+  default     = ""
 }
 
 variable "use_num_suffix" {
@@ -97,7 +99,7 @@ variable "use_num_suffix" {
 variable "vswitch_description" {
   description = "The vswitch description used to launch several new vswitch."
   type        = string
-  default     = "New VSwitch created by Terrafrom module terraform-alicloud-vpc."
+  default     = ""
 }
 
 variable "vswitch_tags" {
@@ -118,4 +120,3 @@ variable "nexthop_ids" {
   type        = list(string)
   default     = []
 }
-

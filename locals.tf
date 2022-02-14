@@ -4,7 +4,7 @@ locals {
   # Get ID of created Security Group
   this_vpc_id = var.vpc_id != "" ? var.vpc_id : concat(alicloud_vpc.vpc.*.id, [""])[0]
   # Whether to create other resources in which the vpc
-  create_sub_resources = var.vpc_id != "" || var.create ? true : false
+  create_sub_resources = var.create ? true : false
   this_vpc_cidr_block  = local.this_vpc_id == "" ? "" : concat(data.alicloud_vpcs.this.vpcs.*.cidr_block, [""])[0]
   this_vpc_name        = local.this_vpc_id == "" ? "" : concat(data.alicloud_vpcs.this.vpcs.*.vpc_name, [""])[0]
 }
