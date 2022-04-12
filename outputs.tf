@@ -1,4 +1,4 @@
-// Output the IDs of the ECS instances created
+# Output the IDs of the ECS instances created
 output "vpc_id" {
   description = "Deprecated and use this_vpc_id instead"
   value       = local.this_vpc_id
@@ -51,7 +51,7 @@ output "this_vpc_tags" {
 
 output "this_resource_group_id" {
   description = "The Id of resource group which the instance belongs."
-  value       = concat(alicloud_vpc.vpc.*.resource_group_id, [])[0]
+  value       = concat(alicloud_vpc.vpc.*.resource_group_id, [""])[0]
 }
 
 output "this_vswitch_ids" {
@@ -83,6 +83,7 @@ output "this_route_table_id" {
   description = "The vpc route table id."
   value       = local.route_table_id
 }
+
 output "this_router_id" {
   description = "The vpc router id."
   value       = concat(alicloud_route_entry.route_entry.*.router_id, [""])[0]

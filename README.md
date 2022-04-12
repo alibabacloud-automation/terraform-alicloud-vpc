@@ -24,26 +24,26 @@ Usage
 ```hcl
 module "vpc" {
   source  = "alibaba/vpc/alicloud"
-    
+
   create            = true
   vpc_name          = "my-env-vpc"
   vpc_cidr          = "10.10.0.0/16"
   resource_group_id = "rg-acfmwvvtg5o****"
-       
+
   availability_zones = ["cn-hangzhou-e", "cn-hangzhou-f", "cn-hangzhou-g"]
   vswitch_cidrs      = ["10.10.1.0/24", "10.10.2.0/24", "10.10.3.0/24"]
-    
+
   vpc_tags = {
     Owner       = "user"
     Environment = "staging"
     Name        = "complete"
   }
-    
+
   vswitch_tags = {
     Project  = "Secret"
     Endpoint = "true"
   }
-    
+
   destination_cidrs = var.destination_cidrs
   nexthop_ids       = var.server_ids
 }
@@ -76,7 +76,7 @@ module "vpc" {
   version     = "1.8.0"
   region      = "cn-hangzhou"
   profile     = "Your-Profile-Name"
-  
+
   create            = true
   vpc_name          = "my-env-vpc"
   // ...
@@ -88,8 +88,8 @@ previous region:
 
 ```hcl
 provider "alicloud" {
-   region  = "cn-hangzhou"
-   profile = "Your-Profile-Name"
+  region  = "cn-hangzhou"
+  profile = "Your-Profile-Name"
 }
 module "vpc" {
   source  = "alibaba/vpc/alicloud"
@@ -114,7 +114,7 @@ module "vpc" {
   providers = {
     alicloud = alicloud.hz
   }
-  
+
   create            = true
   vpc_name          = "my-env-vpc"
   // ...
@@ -124,6 +124,13 @@ module "vpc" {
 and then run `terraform init` and `terraform apply` to make the defined provider effect to the existing module state.
 
 More details see [How to use provider in the module](https://www.terraform.io/docs/language/modules/develop/providers.html#passing-providers-explicitly)
+
+## Terraform versions
+
+| Name | Version |
+|------|---------|
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.13.0 |
+| <a name="requirement_alicloud"></a> [alicloud](#requirement\_alicloud) | >= 1.56.0 |
 
 Submit Issues
 -------------
