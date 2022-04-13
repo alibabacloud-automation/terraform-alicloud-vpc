@@ -1,4 +1,12 @@
-## 1.10.0 (Unreleased)
+## 1.11.0 (Unreleased)
+
+## 1.10.0 (April 13, 2022)
+IMPROVEMENTS:
+- Modified author contact information [GH-35](https://github.com/terraform-alicloud-modules/terraform-alicloud-vpc/pull/35)
+
+BUG FIXES:
+- Fixed Invalid index bug and deprecated attribute name [GH-39](https://github.com/terraform-alicloud-modules/terraform-alicloud-vpc/pull/39)
+
 ## 1.9.0 (August 29, 2021)
 
 IMPROVEMENTS:
