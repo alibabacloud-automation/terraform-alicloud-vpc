@@ -1,6 +1,6 @@
 name: GitHub Actions Demo
 on:
-  push:
+  pull_request:
     branches:
       - master
 
