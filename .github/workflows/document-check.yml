@@ -13,6 +13,9 @@ jobs:
   file-Check:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: '3'
 #      - name: Field Check
       - name: grant permissions
         run: |
