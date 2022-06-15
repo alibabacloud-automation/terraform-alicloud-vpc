@@ -15,7 +15,7 @@ jobs:
     steps:
       - name: Field Check
         run: |
-          ls
+          ls ${{ github.workspace }}
 
 #  terraform-validate:
 #    runs-on: ubuntu-latest
