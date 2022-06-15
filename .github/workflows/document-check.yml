@@ -16,7 +16,7 @@ jobs:
 #      - name: Field Check
        - run: |
            cd ${{ github.workspace }}
-           ls -la
+           sudo bash test/test.sh
 #      - sudo bash ${{ github.workspace }}/test/test.sh
 
 #  terraform-validate:
