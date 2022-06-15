@@ -14,7 +14,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 #      - name: Field Check
-       - run: bash test/test.sh
+       - run: |
+           sudo bash test/test.sh
 
 #      run: |
 #          if [ ! -d "${{ github.workspace }}/examples/complete" ]; then
