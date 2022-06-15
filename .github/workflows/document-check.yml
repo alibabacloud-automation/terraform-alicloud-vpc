@@ -10,28 +10,13 @@ on:
       - master
 
 jobs:
-  Field-Check:
+  file-Check:
     runs-on: ubuntu-latest
     steps:
 #      - name: Field Check
-       - run: |
-           sudo bash ${{ github.workspace }}/test/test.sh
-
-#      run: |
-#          if [ ! -d "${{ github.workspace }}/examples/complete" ]; then
-#              RESULT="${RESULT} \n ---FAIL---\n: Please Add the COMPLETE"
-##              echo -e "\033[33m ${RESULT} \033[0m"
-##              PostDingTalk "${RESULT}"
-#              exit 1
-#          fi
-#
-#      run: |
-#          if [ ! -d "${{ github.workspace }}/examples/complete/tfvars" ]] ; then
-#              RESULT="${RESULT} \n ---FAIL---\n: Please Add the TFVAR File"
-##              echo -e "\033[33m ${RESULT} \033[0m"
-##              PostDingTalk "${RESULT}"
-#              exit 1
-#          fi
+       - run: cd ${{ github.workspace }}
+       - run: ls -la
+#      - sudo bash ${{ github.workspace }}/test/test.sh
 
 #  terraform-validate:
 #    runs-on: ubuntu-latest
