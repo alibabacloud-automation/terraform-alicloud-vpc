@@ -15,12 +15,8 @@ jobs:
     steps:
       - name: Field Check
         run: |
-
           if [ ! -d "${{ github.workspace }}/examples" ]; then
-              RESULT="${RESULT} \n ---FAIL---\n: Please Add the EXAMPLES"
-#              echo -e "\033[33m ${RESULT} \033[0m"
-#              PostDingTalk "${RESULT}"
-              exit 1
+              echo: FAIL: Please Add the EXAMPLES"
           fi
 
 #      run: |
