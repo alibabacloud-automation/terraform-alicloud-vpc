@@ -14,8 +14,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
 #      - name: Field Check
-       - run: |
-           if [ ! -d "${{ github.workspace }}/examples" ]; then echo: "FAIL: Please Add the EXAMPLES" fi
+      - name: grant permissions
+        run: |
+          chmod +rwx test/test.sh
+      - name: Field Check
+        run: |
+          sudo bash test/test.sh
 #      - sudo bash ${{ github.workspace }}/test/test.sh
 
 #  terraform-validate:
