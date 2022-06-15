@@ -1,5 +1,3 @@
-ls -la
-
-if [ ! -d "${{ github.workspace }}/example" ]; then
+if [ ! -d "${{ github.workspace }}/examples" ]; then
   echo: "FAIL: Please Add the EXAMPLES"
 fi
