@@ -17,9 +17,9 @@ jobs:
         with:
           fetch-depth: '3'
 #      - name: Field Check
-      - name: grant permissions
-        run: |
-          chmod +rwx test/test.sh
+#      - name: grant permissions
+#        run: |
+#          chmod +rwx test/test.sh
       - name: Field Check
         run: |
           sudo bash test/test.sh
