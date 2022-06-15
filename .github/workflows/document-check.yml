@@ -15,32 +15,29 @@ jobs:
     steps:
       - name: Field Check
         run: |
-          EXAMPLES=${{ github.workspace }}/examples
-          COMPLETE=$EXAMPLES/complete
-          TFVAR=$COMPLETE/tfvars
 
-          if [ ! -d "${EXAMPLES}" ]; then
+          if [ ! -d "${{ github.workspace }}/examples" ]; then
               RESULT="${RESULT} \n ---FAIL---\n: Please Add the EXAMPLES"
 #              echo -e "\033[33m ${RESULT} \033[0m"
 #              PostDingTalk "${RESULT}"
               exit 1
           fi
 
-      run: |
-          if [ ! -d "${COMPLETE}" ]; then
-              RESULT="${RESULT} \n ---FAIL---\n: Please Add the COMPLETE"
-#              echo -e "\033[33m ${RESULT} \033[0m"
-#              PostDingTalk "${RESULT}"
-              exit 1
-          fi
-
-      run: |
-          if [ ! -d "${TFVAR}" ] && [ Update == "true" ] ; then
-              RESULT="${RESULT} \n ---FAIL---\n: Please Add the TFVAR File"
-#              echo -e "\033[33m ${RESULT} \033[0m"
-#              PostDingTalk "${RESULT}"
-              exit 1
-          fi
+#      run: |
+#          if [ ! -d "${{ github.workspace }}/examples/complete" ]; then
+#              RESULT="${RESULT} \n ---FAIL---\n: Please Add the COMPLETE"
+##              echo -e "\033[33m ${RESULT} \033[0m"
+##              PostDingTalk "${RESULT}"
+#              exit 1
+#          fi
+#
+#      run: |
+#          if [ ! -d "${{ github.workspace }}/examples/complete/tfvars" ]] ; then
+#              RESULT="${RESULT} \n ---FAIL---\n: Please Add the TFVAR File"
+##              echo -e "\033[33m ${RESULT} \033[0m"
+##              PostDingTalk "${RESULT}"
+#              exit 1
+#          fi
 
 #  terraform-validate:
 #    runs-on: ubuntu-latest
