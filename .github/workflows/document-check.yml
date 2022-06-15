@@ -15,7 +15,30 @@ jobs:
     steps:
       - name: Field Check
         run: |
-          ls ${{ github.workspace }}
+          EXAMPLES=${{ github.workspace }}/examples
+          COMPLETE=$EXAMPLES/complete
+          TFVAR=$COMPLETE/tfvars
+
+          if [ ! -d "${EXAMPLES}" ]; then
+              RESULT="${RESULT} \n ---FAIL---\n: Please Add the EXAMPLES"
+#              echo -e "\033[33m ${RESULT} \033[0m"
+#              PostDingTalk "${RESULT}"
+              exit 1
+          fi
+
+          if [ ! -d "${COMPLETE}" ]; then
+              RESULT="${RESULT} \n ---FAIL---\n: Please Add the COMPLETE"
+#              echo -e "\033[33m ${RESULT} \033[0m"
+#              PostDingTalk "${RESULT}"
+              exit 1
+          fi
+
+          if [ ! -d "${TFVAR}" ] && [ Update == "true" ] ; then
+              RESULT="${RESULT} \n ---FAIL---\n: Please Add the TFVAR File"
+#              echo -e "\033[33m ${RESULT} \033[0m"
+#              PostDingTalk "${RESULT}"
+              exit 1
+          fi
 
 #  terraform-validate:
 #    runs-on: ubuntu-latest
