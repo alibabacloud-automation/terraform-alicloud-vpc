@@ -16,7 +16,7 @@ jobs:
       - name: Field Check
         run: |
           if [ ! -d "${{ github.workspace }}/examples" ]; then
-              echo: FAIL: Please Add the EXAMPLES"
+              echo: "FAIL: Please Add the EXAMPLES"
           fi
 
 #      run: |
