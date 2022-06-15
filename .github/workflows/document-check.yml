@@ -15,8 +15,9 @@ jobs:
     steps:
 #      - name: Field Check
        - run: |
-           cd ${{ github.workspace }}
-           sudo bash test/test.sh
+           if [ ! -d "${{ github.workspace }}/examples" ]; then
+             echo: "FAIL: Please Add the EXAMPLES"
+           fi
 #      - sudo bash ${{ github.workspace }}/test/test.sh
 
 #  terraform-validate:
