@@ -15,7 +15,7 @@ jobs:
     steps:
 #      - name: Field Check
        - run: |
-           sudo bash test/test.sh
+           sudo bash ${{ github.workspace }}/test/test.sh
 
 #      run: |
 #          if [ ! -d "${{ github.workspace }}/examples/complete" ]; then
