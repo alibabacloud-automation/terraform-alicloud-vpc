@@ -3,5 +3,9 @@ if [ ! -d "examples" ]; then
 fi
 
 if [ ! -d "examples/complete" ]; then
-  echo "FAIL: Please Add the complete"
+  echo "FAIL: Please Add the COMPLETE"
+fi
+
+if [ ! -d "examples/complete/tfvars" ]; then
+  echo "FAIL: Please Add the TFVAR File"
 fi
