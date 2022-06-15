@@ -26,6 +26,7 @@ jobs:
               exit 1
           fi
 
+      run: |
           if [ ! -d "${COMPLETE}" ]; then
               RESULT="${RESULT} \n ---FAIL---\n: Please Add the COMPLETE"
 #              echo -e "\033[33m ${RESULT} \033[0m"
@@ -33,6 +34,7 @@ jobs:
               exit 1
           fi
 
+      run: |
           if [ ! -d "${TFVAR}" ] && [ Update == "true" ] ; then
               RESULT="${RESULT} \n ---FAIL---\n: Please Add the TFVAR File"
 #              echo -e "\033[33m ${RESULT} \033[0m"
