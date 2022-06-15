@@ -14,10 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Field Check
-        run: |
-          if [ ! -d "${{ github.workspace }}/examples" ]; then
-              echo: "FAIL: Please Add the EXAMPLES"
-          fi
+        run: bash .github/workflows/test.sh
 
 #      run: |
 #          if [ ! -d "${{ github.workspace }}/examples/complete" ]; then
