@@ -6,18 +6,18 @@ on:
     branches:
       - main
       - master
-    paths:
-      - '**/*.tpl'
-      - '**/*.py'
-      - '**/*.tf'
-      - '.github/workflows/release.yml'
+#    paths:
+#      - '**/*.tpl'
+#      - '**/*.py'
+#      - '**/*.tf'
+#      - '.github/workflows/release.yml'
 
 jobs:
   release:
     name: Release
     runs-on: ubuntu-latest
     # Skip running release workflow on forks
-    if: github.repository_owner == 'terraform-alicloud-modules'
+#    if: github.repository_owner == 'terraform-alicloud-modules'
     steps:
       - name: Checkout
         uses: actions/checkout@v2
