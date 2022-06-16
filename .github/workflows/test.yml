@@ -23,7 +23,7 @@ jobs:
         uses: clowdhaus/terraform-min-max@main
         with:
           directory: .
-        run: |
+      - run: |
           echo ${{ steps.minMax.outputs.minVersion }}
       - run: |
           echo ${{ steps.minMax.outputs.maxVersion }}
