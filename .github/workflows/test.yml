@@ -27,9 +27,9 @@ jobs:
           echo ${{ steps.minMax.outputs.minVersion }}
       - run: |
           echo ${{ steps.minMax.outputs.maxVersion }}
-#    outputs:
-#      minVersion: ${{ steps.minMax.outputs.minVersion }}
-#      maxVersion: ${{ steps.minMax.outputs.maxVersion }}
+    outputs:
+      minVersion: ${{ steps.minMax.outputs.minVersion }}
+      maxVersion: ${{ steps.minMax.outputs.maxVersion }}
 
   versionEvaluate:
     name: Evaluate Min/Max Versions
@@ -52,7 +52,7 @@ jobs:
 
       - name: Initialize and validate v${{ matrix.version }}
         run: |
-          echo matrix.version
+          echo ${{ matrix.version }}
 #          cd tests/0.13
 #          terraform init
 #          terraform validate
