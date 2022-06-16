@@ -1,4 +1,4 @@
-name: Documentation Checks
+name: test Checks
 on:
   push:
     branches:
@@ -21,8 +21,8 @@ jobs:
       - name: Extract Terraform min/max versions
         id: minMax
         uses: clowdhaus/terraform-min-max@main
-        with:
-          directory: .
+#        with:
+#          directory: .
       - run: |
           echo ${{ steps.minMax.outputs.minVersion }}
       - run: |
