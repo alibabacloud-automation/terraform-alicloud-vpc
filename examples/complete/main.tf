@@ -9,6 +9,9 @@ provider "alicloud" {
   profile = var.profile
 }
 
+data "alicloud_resource_manager_resource_groups" "default" {
+}
+
 
 module "vpc" {
   source  = "../../"
@@ -18,7 +21,7 @@ module "vpc" {
   vpc_name = "complete-example"
 
   vpc_cidr          = "10.10.0.0/16"
-  resource_group_id = "rg-acfmwvvtg5o****"
+  resource_group_id = data.alicloud_resource_manager_resource_groups.default.ids.0
 
 
   availability_zones = ["cn-hangzhou-e", "cn-hangzhou-f", "cn-hangzhou-g"]
