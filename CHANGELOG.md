@@ -1,4 +1,7 @@
-## 1.11.0 (Unreleased)
+## 1.12.0 (Unreleased)
+## 1.11.0 (September 10, 2024)
+
+- module: improve the data source alicloud_vpcs [GH-45](https://github.com/alibabacloud-automation/terraform-alicloud-vpc/pull/45)
 
 ## 1.10.0 (April 13, 2022)
 IMPROVEMENTS:
