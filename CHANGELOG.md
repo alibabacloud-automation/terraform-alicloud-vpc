@@ -1,3 +1,5 @@
+## [1.11.1](https://github.com/alibabacloud-automation/terraform-alicloud-vpc/compare/v1.11.0...v1.11.1) (2025-11-25)
+
 ## 1.12.0 (Unreleased)
 ## 1.11.0 (September 10, 2024)
 
@@ -85,5 +87,3 @@ BUG FIXES:
 IMPROVEMENTS:
 
 - Support output cidr_blocks
-
-
