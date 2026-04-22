@@ -1,12 +1,5 @@
-variable "profile" {
-  default = "default"
-}
-variable "region" {
-  default = "cn-hangzhou"
-}
 provider "alicloud" {
-  region  = var.region
-  profile = var.profile
+  region = "cn-hangzhou"
 }
 
 data "alicloud_resource_manager_resource_groups" "default" {
@@ -14,14 +7,12 @@ data "alicloud_resource_manager_resource_groups" "default" {
 
 
 module "vpc" {
-  source  = "../../"
-  region  = var.region
-  profile = var.profile
+  source = "../../"
 
   vpc_name = "complete-example"
 
   vpc_cidr          = "10.10.0.0/16"
-  resource_group_id = data.alicloud_resource_manager_resource_groups.default.ids.0
+  resource_group_id = data.alicloud_resource_manager_resource_groups.default.ids[0]
 
 
   availability_zones = ["cn-hangzhou-e", "cn-hangzhou-f", "cn-hangzhou-g"]
@@ -41,9 +32,7 @@ module "vpc" {
 
 # This vpc and other resources won't be created
 module "vpc_zero" {
-  source  = "../../"
-  region  = var.region
-  profile = var.profile
+  source = "../../"
 
   create   = false
   vpc_name = "complete-example"

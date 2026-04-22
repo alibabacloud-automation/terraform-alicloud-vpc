@@ -1,12 +1,12 @@
 locals {
-  route_table_id = var.vpc_id == "" ? concat(alicloud_vpc.vpc.*.route_table_id, [""])[0] : data.alicloud_route_tables.this.ids.0
+  route_table_id = var.vpc_id == "" ? concat(alicloud_vpc.vpc[*].route_table_id, [""])[0] : data.alicloud_route_tables.this.ids[0]
 
   # Get ID of created Security Group
-  this_vpc_id = var.vpc_id != "" ? var.vpc_id : concat(alicloud_vpc.vpc.*.id, [""])[0]
+  this_vpc_id = var.vpc_id != "" ? var.vpc_id : concat(alicloud_vpc.vpc[*].id, [""])[0]
   # Whether to create other resources in which the vpc
   create_sub_resources = var.vpc_id != "" || var.create ? true : false
-  this_vpc_cidr_block  = var.vpc_id != "" ? concat(data.alicloud_vpcs.this[0].vpcs.*.cidr_block, [""])[0] : concat(alicloud_vpc.vpc.*.cidr_block, [""])[0]
-  this_vpc_name        = var.vpc_id != "" ? concat(data.alicloud_vpcs.this[0].vpcs.*.vpc_name, [""])[0] : concat(alicloud_vpc.vpc.*.vpc_name, [""])[0]
+  this_vpc_cidr_block  = var.vpc_id != "" ? concat(data.alicloud_vpcs.this[0].vpcs[*].cidr_block, [""])[0] : concat(alicloud_vpc.vpc[*].cidr_block, [""])[0]
+  this_vpc_name        = var.vpc_id != "" ? concat(data.alicloud_vpcs.this[0].vpcs[*].vpc_name, [""])[0] : concat(alicloud_vpc.vpc[*].vpc_name, [""])[0]
 }
 
 data "alicloud_route_tables" "this" {
